@@ -1,0 +1,29 @@
+{
+    "name": "cachApp",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "test": "jest",
+        "dev": "parcel src/index.html",
+        "format": "prettier --ignore-path ./gitignore "
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "eslint": "^7.2.0",
+        "eslint-config-prettier": "^6.11.0",
+        "eslint-plugin-import": "^2.21.2",
+        "jest": "^26.0.1",
+        "parcel-bundler": "^1.12.4",
+        "prettier": "^2.0.5"
+    },
+    "browserslist": [
+        "last 2 Chrome versions"
+    ],
+    "dependencies": {
+        "@vaadin/router": "^1.7.2",
+        "lit-element": "^2.3.1"
+    }
+}
