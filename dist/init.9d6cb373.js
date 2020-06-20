@@ -7081,6 +7081,12 @@ class HomePage extends _litElement.LitElement {
     return {
       status: {
         type: String
+      },
+      user: {
+        type: String
+      },
+      password: {
+        type: String
       }
     };
   }
@@ -7088,10 +7094,12 @@ class HomePage extends _litElement.LitElement {
   constructor() {
     super();
     this.status = 'inactive';
+    this.user = '';
+    this.password = '';
   }
 
   static get styles() {
-    return (0, _litElement.css)`
+    return [(0, _litElement.css)`
         :host{
             min-height: 100%;
             display: grid;
@@ -7240,12 +7248,13 @@ class HomePage extends _litElement.LitElement {
             padding: 2em;
             background: #fff;
             transform: translateY(100%);
-            transition: transform 1s;
+            transition: transform 0.7s;
             z-index: 1;
             min-height: 100%;
             display: grid;
             grid-template-rows: 1fr auto;
             grid-template-columns: 100%;
+            box-sizing: border-box;
         }
 
         .modal form {
@@ -7260,6 +7269,34 @@ class HomePage extends _litElement.LitElement {
             margin-bottom: 2em;
         }
 
+        .modal form .password-field{
+            float: right;
+            margin-left: -80px;
+            margin-top: -25px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .modal form .buttons{
+            display: flex;
+            justify-content: space-around;
+            margin-top: 2em;
+        }
+
+        .modal form .button {
+            height: 48px;
+            opacity: 0.95;
+            background: rgb(10, 27, 96);
+            box-shadow: rgba(0, 0, 0, 0.5) 0px 2px 4px 0px, rgba(0, 0, 0, 0.72) 4px 4px 8px 0px;
+            border-radius: 100px;
+            font-family: VarelaRound-Regular;
+            font-size: 16px;
+            color: #fff;
+            letter-spacing: 1px;
+            text-transform: capitalize;
+            width: 8em;
+        }
+
         .modal .other-logins{
             height: 8em;
         }
@@ -7269,8 +7306,57 @@ class HomePage extends _litElement.LitElement {
         }
 
 
-        
-        `;
+        #share {
+            width: 100%;
+            text-align: center;
+        }
+
+
+        #share .socialbtn{
+            width: 50px;
+            height: 50px;
+            display: inline-block;
+            margin: 8px;
+            border-radius: 50%;
+            font-size: 24px;
+            color: #fff;
+            opacity: 0.75;
+            transition: opacity 0.15s linear;
+        }
+
+        #share .socialbtn:hover {
+            opacity: 1;
+        }
+
+
+        #share i {
+            position: relative;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+
+        .facebook {
+            background: #3b5998;
+        }
+
+        .twitter {
+            background: #55acee;
+        }
+
+        .googleplus {
+            background: #dd4b39;
+        }
+
+        .linkedin {
+            background: #0077b5;
+        }
+
+        .pinterest {
+            background: #cb2027;
+        }
+     
+        `];
   }
 
   render() {
@@ -7293,18 +7379,43 @@ class HomePage extends _litElement.LitElement {
         </button>
          </footer>
          <div class="modal">
-         <form action="">
+         <form @submit="${this.doLogin}">
             <input name="username" id="login-username" class="login-input" type="text" maxlength="96" tabindex="1" aria-required="true"
-            value="" placeholder="e-mail" title="e-mail" autocorrect="off" spellcheck="false"  required>
-
+            .value="${this.user}" placeholder="e-mail" title="e-mail" @input="${this.setValue}" autocorrect="off" spellcheck="false"  required >
             <input name="password" id="login-password" class="login-input " type="password" maxlength="8" tabindex="1" aria-required="true"
-            value="" placeholder="password" title="password" autocorrect="off" spellcheck="false" required>
+            .value="${this.password}" placeholder="password" @input="${this.setValue}" autocorrect="off" spellcheck="false"  required >
 
-            <button id="login-signing" class="pure-u-1 pure-button mbr-button-primary" type="submit" value="Submit" tabindex="1">Login</button>
+            <p id="last_line">
+            <label for="show_password">
+                <input type="checkbox" name="show_password" id="show_password" @click="${this.clickShow}">
+                Show Password
+            </label>
+            </p>
+            <div class="buttons">
+                <button id="login-signing" class="button " type="submit" value="Submit" tabindex="1">Login</button>
+                <button id="login-signing" class="button " tabindex="1" @click="${this.close}">close</button>
+            </div>
+          
          </form>
 
          <div class="other-logins">
+         <div id="share">
+            <!-- facebook -->
+            <button  class="socialbtn facebook" ><i class="fa fa-facebook"></i></a>
 
+            <!-- twitter -->
+            <button class="socialbtn twitter"><i class="fa fa-twitter"></i></a>
+
+            <!-- google plus -->
+            <button class="socialbtn googleplus"><i class="fa fa-google-plus"></i></a>
+
+            <!-- linkedin -->
+            <button class="socialbtn linkedin" ><i class="fa fa-linkedin"></i></a>
+
+            <!-- pinterest -->
+            <button class="socialbtn pinterest" ><i class="fa fa-pinterest-p"></i></a>
+
+            </div>
          </div>
          </div>  
         `;
@@ -7316,6 +7427,44 @@ class HomePage extends _litElement.LitElement {
     node.classList.toggle('show');
   }
 
+  clickShow(e) {
+    const node = this.shadowRoot.querySelector('#login-password');
+    e.target.checked ? node.type = 'text' : node.type = 'password';
+  }
+
+  closeModal() {
+    const node = this.shadowRoot.querySelector('.modal');
+    node.classList.toggle('show');
+  }
+
+  close(e) {
+    this.resetLogo();
+    this.closeModal();
+    this.resetForm();
+  }
+
+  resetForm() {
+    this.user = '';
+    this.password = '';
+  }
+
+  resetLogo() {
+    this.status = 'inactive';
+  }
+
+  setValue(e) {
+    e.target.name === 'password' ? this.password = e.target.value : this.user = e.target.value;
+  }
+
+  doLogin(event) {
+    if (event) {
+      event.preventDefault();
+    }
+
+    this.closeModal();
+    location.assign('/dashboard');
+  }
+
 }
 
 exports.HomePage = HomePage;
@@ -7325,23 +7474,79 @@ exports.HomePage = HomePage;
 var _homePage = require("./homePage.js");
 
 customElements.define('home-page', _homePage.HomePage);
-},{"./homePage.js":"pages/homePage.js"}],"init.js":[function(require,module,exports) {
+},{"./homePage.js":"pages/homePage.js"}],"pages/dashboardPage.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.DashboardPage = void 0;
+
+var _litElement = require("lit-element");
+
+class DashboardPage extends _litElement.LitElement {
+  static get properties() {
+    return {};
+  }
+
+  constructor() {
+    super();
+  }
+
+  static get styles() {
+    return [(0, _litElement.css)`
+        :host {
+            height: 100%;
+            width: 100%;
+            display: block;
+            background: red;
+            }
+        `];
+  }
+
+  render() {
+    return (0, _litElement.html)`
+        <main>
+        </main>
+        <footer></footer>
+        `;
+  }
+
+}
+
+exports.DashboardPage = DashboardPage;
+},{"lit-element":"../node_modules/lit-element/lit-element.js"}],"pages/dashboard-page.js":[function(require,module,exports) {
+"use strict";
+
+var _dashboardPage = require("./dashboardPage.js");
+
+customElements.define('dashboard-page', _dashboardPage.DashboardPage);
+},{"./dashboardPage.js":"pages/dashboardPage.js"}],"init.js":[function(require,module,exports) {
 "use strict";
 
 var _router = require("@vaadin/router");
 
 require("./pages/home-page.js");
 
+require("./pages/dashboard-page.js");
+
 const outlet = document.getElementById('outlet');
 const router = new _router.Router(outlet);
 router.setRoutes([{
   path: '/',
-  component: 'home-page'
-}, {
-  path: '(.*)',
-  component: 'home-page'
+  animate: true,
+  children: [{
+    path: '/',
+    component: 'home-page'
+  }, {
+    path: '/dashboard',
+    component: 'dashboard-page'
+  }, {
+    path: '(.*)',
+    component: 'home-page'
+  }]
 }]);
-},{"@vaadin/router":"../node_modules/@vaadin/router/dist/vaadin-router.js","./pages/home-page.js":"pages/home-page.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"@vaadin/router":"../node_modules/@vaadin/router/dist/vaadin-router.js","./pages/home-page.js":"pages/home-page.js","./pages/dashboard-page.js":"pages/dashboard-page.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -7369,7 +7574,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53634" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64978" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
