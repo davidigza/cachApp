@@ -6917,7 +6917,154 @@ LitElement['finalized'] = true;
  */
 
 LitElement.render = _shadyRender.render;
-},{"lit-html/lib/shady-render.js":"../node_modules/lit-html/lib/shady-render.js","./lib/updating-element.js":"../node_modules/lit-element/lib/updating-element.js","./lib/decorators.js":"../node_modules/lit-element/lib/decorators.js","lit-html/lit-html.js":"../node_modules/lit-html/lit-html.js","./lib/css-tag.js":"../node_modules/lit-element/lib/css-tag.js"}],"pages/homePage.js":[function(require,module,exports) {
+},{"lit-html/lib/shady-render.js":"../node_modules/lit-html/lib/shady-render.js","./lib/updating-element.js":"../node_modules/lit-element/lib/updating-element.js","./lib/decorators.js":"../node_modules/lit-element/lib/decorators.js","lit-html/lit-html.js":"../node_modules/lit-html/lit-html.js","./lib/css-tag.js":"../node_modules/lit-element/lib/css-tag.js"}],"elements/logoSpinner.js":[function(require,module,exports) {
+"use strict";
+
+var _litElement = require("lit-element");
+
+class LogoSpinner extends _litElement.LitElement {
+  static get properties() {
+    return {
+      status: {
+        type: String
+      }
+    };
+  }
+
+  constructor() {
+    super();
+    this.myStatus = '';
+  }
+
+  static get styles() {
+    return (0, _litElement.css)`
+        :host{
+            --logo-height: 5.750em;
+            --logo-witdh: 5.750em;
+            --point-color: rgb(10,27,96);
+            --primary-line-color: rgb(70,81,135);
+            --secondary-line-color: rgb(159,216,233);
+            --terciary-line-color: rgb(251,226,84);
+            height: var(--logo-height);
+            width: var(--logo-witdh);
+        }
+        .atom-spinner, .atom-spinner * {
+            box-sizing: border-box;
+          }
+        
+          .atom-spinner {
+            height: var(--logo-height);
+            width: var(--logo-witdh);
+            overflow: hidden;
+        
+          }
+        
+          .atom-spinner .spinner-inner {
+            position: relative;
+            display: block;
+            height: 100%;
+            width: 100%;
+          }
+        
+          .atom-spinner .spinner-circle {
+            display: block;
+            position: absolute;
+            color: var(--point-color);
+            font-size: calc(60px * 0.24);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+          }
+        
+          .atom-spinner .spinner-line {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            animation-duration: 1s;
+            border-left-width: calc(var(--logo-height) / 25);
+            border-top-width: calc(var(--logo-height) / 25);
+            border-left-color: #000;
+            border-left-style: solid;
+            border-top-style: solid;
+            border-top-color: transparent;
+          }
+
+
+        
+          .atom-spinner .spinner-line:nth-child(1) {
+            border-left-color: var(--primary-line-color);
+            transform: rotateZ(120deg) rotateX(66deg) rotateZ(0deg);
+          }
+        
+         .atom-spinner .spinner-line:nth-child(2) {
+            border-left-color: var(--secondary-line-color);
+            transform: rotateZ(240deg) rotateX(66deg) rotateZ(0deg);
+          }
+        
+        .atom-spinner .spinner-line:nth-child(3) {
+            border-left-color: var(--terciary-line-color);
+            transform: rotateZ(360deg) rotateX(66deg) rotateZ(0deg);
+          }
+        
+        
+        
+        
+          .atom-spinner[status="active"] .spinner-line:nth-child(1) {
+            animation: atom-spinner-animation-1 1s linear infinite;
+            
+          }
+        
+          .atom-spinner[status="active"] .spinner-line:nth-child(2) {
+            animation: atom-spinner-animation-2 1s linear infinite;
+          }
+        
+          .atom-spinner[status="active"] .spinner-line:nth-child(3) {
+            animation: atom-spinner-animation-3 1s linear infinite;
+          }
+        
+          @keyframes atom-spinner-animation-1 {
+            100% {
+              transform: rotateZ(120deg) rotateX(66deg) rotateZ(360deg);
+            }
+          }
+        
+          @keyframes atom-spinner-animation-2 {
+            100% {
+              transform: rotateZ(240deg) rotateX(66deg) rotateZ(360deg);
+            }
+          }
+        
+          @keyframes atom-spinner-animation-3 {
+            100% {
+              transform: rotateZ(360deg) rotateX(66deg) rotateZ(360deg);
+            }
+          }
+        
+        
+        
+        `;
+  }
+
+  render() {
+    return (0, _litElement.html)`
+       <div class="atom-spinner" status="${this.status}">
+            <div class="spinner-inner">
+                <div class="spinner-line" ></div>
+                <div class="spinner-line" ></div>
+                <div class="spinner-line" ></div>
+                <div class="spinner-circle">
+                    &#9679;
+                </div>
+            </div>
+        </div>
+        `;
+  }
+
+}
+
+customElements.define('logo-spinner', LogoSpinner);
+},{"lit-element":"../node_modules/lit-element/lit-element.js"}],"pages/homePage.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -6927,30 +7074,252 @@ exports.HomePage = void 0;
 
 var _litElement = require("lit-element");
 
+require("../elements/logoSpinner.js");
+
 class HomePage extends _litElement.LitElement {
   static get properties() {
     return {
-      title: {
+      status: {
         type: String
       }
     };
   }
 
+  constructor() {
+    super();
+    this.status = 'inactive';
+  }
+
   static get styles() {
-    return (0, _litElement.css)``;
+    return (0, _litElement.css)`
+        :host{
+            min-height: 100%;
+            display: grid;
+            grid-template-rows: 1fr auto;
+            grid-template-columns: 100%;
+            position: relative;
+        }
+        main{
+            display:flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        footer {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 6em;
+        }
+        
+        .content{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            letter-spacing: 2px;
+        }
+
+        .content h1{
+            font-family: 'Ultra', serif;
+            text-transform: uppercase;
+            color: rgb(10,27,96);
+            font-size: 3em;
+        }
+
+        .content span{
+            font-family: 'Shadows Into Light', cursive;
+            font-size: 2em;
+            color: rgb(10,27,96);
+        }
+
+        .btn{
+            text-decoration:none;
+            font-weight: 600;
+            font-size: 20px;
+            color:#333333;
+            padding-top:15px;
+            padding-bottom:15px;
+            padding-left:40px;
+            padding-right:40px;
+            background-color:blue;
+            border-radius:35px;
+        }
+
+        button {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+            outline: none;
+            border: 0;
+            vertical-align: middle;
+            text-decoration: none;
+            background: transparent;
+            padding: 0;
+            font-size: inherit;
+            font-family: inherit;
+        }
+        button.learn-more {
+            width: 12rem;
+            height: auto;
+        }
+        button.learn-more .circle {
+            -webkit-transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+            transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+            position: relative;
+            display: block;
+            margin: 0;
+            width: 3rem;
+            height: 3rem;
+            background: rgb(10, 27, 96);
+            border-radius: 1.625rem;
+        }
+        button.learn-more .circle .icon {
+            -webkit-transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+            transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            margin: auto;
+            background: #fff;
+        }
+        button.learn-more .circle .icon.arrow {
+            -webkit-transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+            transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+            left: 0.625rem;
+            width: 1.125rem;
+            height: 0.125rem;
+            background: none;
+        }
+        button.learn-more .circle .icon.arrow::before {
+            position: absolute;
+            content: '';
+            top: -0.25rem;
+            right: 0.0625rem;
+            width: 0.625rem;
+            height: 0.625rem;
+            border-top: 0.125rem solid #fff;
+            border-right: 0.125rem solid #fff;
+            -webkit-transform: rotate(45deg);
+                    transform: rotate(45deg);
+        }
+        button.learn-more .button-text {
+            -webkit-transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+            transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            padding: 0.75rem 0;
+            margin: 0 0 0 1.85rem;
+            color: rgb(10, 27, 96);
+            font-weight: 700;
+            line-height: 1.6;
+            text-align: center;
+            text-transform: uppercase;
+        }
+        button:hover .circle {
+            width: 100%;
+        }
+        button:hover .circle .icon.arrow {
+            background: #fff;
+            -webkit-transform: translate(1rem, 0);
+                    transform: translate(1rem, 0);
+        }
+        button:hover .button-text {
+            color: #fff;
+        }
+        .modal{
+            position:absolute;
+            top:0;
+            bottom:0;
+            left:0;
+            right:0;
+            padding: 2em;
+            background: #fff;
+            transform: translateY(100%);
+            transition: transform 1s;
+            z-index: 1;
+            min-height: 100%;
+            display: grid;
+            grid-template-rows: 1fr auto;
+            grid-template-columns: 100%;
+        }
+
+        .modal form {
+            display: flex;
+            flex-direction: column; 
+        }
+
+        .modal .login-input {
+            border: 1px solid #000;
+            border-radius: 24px;
+            padding: 1em;
+            margin-bottom: 2em;
+        }
+
+        .modal .other-logins{
+            height: 8em;
+        }
+
+        .modal.show {
+            transform: translateY(0);
+        }
+
+
+        
+        `;
   }
 
   render() {
     return (0, _litElement.html)`
         <main>
-            <h1>Working</h1>
-        </main>`;
+            <div class="content">
+                <logo-spinner status="${this.status}"></logo-spinner>
+                <div>
+                    <h1>actíva T</h1>
+                    <span>libera tu energia</span>
+                </div>
+            </div> 
+        </main>
+         <footer>
+         <button class="learn-more" @click="${this.handleClick}">
+            <span class="circle" aria-hidden="true">
+            <span class="icon arrow"></span>
+            </span>
+            <span class="button-text">Entra</span>
+        </button>
+         </footer>
+         <div class="modal">
+         <form action="">
+            <input name="username" id="login-username" class="login-input" type="text" maxlength="96" tabindex="1" aria-required="true"
+            value="" placeholder="e-mail" title="e-mail" autocorrect="off" spellcheck="false"  required>
+
+            <input name="password" id="login-password" class="login-input " type="password" maxlength="8" tabindex="1" aria-required="true"
+            value="" placeholder="password" title="password" autocorrect="off" spellcheck="false" required>
+
+            <button id="login-signing" class="pure-u-1 pure-button mbr-button-primary" type="submit" value="Submit" tabindex="1">Login</button>
+         </form>
+
+         <div class="other-logins">
+
+         </div>
+         </div>  
+        `;
+  }
+
+  handleClick() {
+    this.status = 'active';
+    const node = this.shadowRoot.querySelector('.modal');
+    node.classList.toggle('show');
   }
 
 }
 
 exports.HomePage = HomePage;
-},{"lit-element":"../node_modules/lit-element/lit-element.js"}],"pages/home-page.js":[function(require,module,exports) {
+},{"lit-element":"../node_modules/lit-element/lit-element.js","../elements/logoSpinner.js":"elements/logoSpinner.js"}],"pages/home-page.js":[function(require,module,exports) {
 "use strict";
 
 var _homePage = require("./homePage.js");
@@ -7000,7 +7369,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51867" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53634" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
