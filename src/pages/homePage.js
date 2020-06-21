@@ -5,6 +5,8 @@ import {
 } from 'lit-element';
 import '../elements/logoSpinner.js';
 
+import fontscss from '../helpers/fontsStyles.js'
+
 
 export class HomePage extends LitElement {
     static get properties() {
@@ -30,7 +32,7 @@ export class HomePage extends LitElement {
     }
 
     static get styles() {
-        return [css `
+        return [fontscss, css `
         :host{
             min-height: 100%;
             display: grid;
@@ -286,7 +288,6 @@ export class HomePage extends LitElement {
         .pinterest {
             background: #cb2027;
         }
-     
         `];
     }
 
@@ -296,7 +297,7 @@ export class HomePage extends LitElement {
             <div class="content">
                 <logo-spinner status="${this.status}"></logo-spinner>
                 <div>
-                    <h1>actíva T</h1>
+                    <h1>actíva-T</h1>
                     <span>libera tu energia</span>
                 </div>
             </div> 
@@ -326,25 +327,24 @@ export class HomePage extends LitElement {
                 <button id="login-signing" class="button " type="submit" value="Submit" tabindex="1">Login</button>
                 <button id="login-signing" class="button " tabindex="1" @click="${this.close}">close</button>
             </div>
-          
+            <a href="/dashboard"></a>
          </form>
+
+
 
          <div class="other-logins">
          <div id="share">
             <!-- facebook -->
-            <button  class="socialbtn facebook" ><i class="fa fa-facebook"></i></a>
+            <button  class="socialbtn facebook" ><span class="icon-facebook"><span class="path1"></span><span class="path2"></span></span></a>
 
             <!-- twitter -->
-            <button class="socialbtn twitter"><i class="fa fa-twitter"></i></a>
+            <button class="socialbtn twitter"><span class="icon-twitter"><span class="path1"></span><span class="path2"></span></span></a>
 
             <!-- google plus -->
-            <button class="socialbtn googleplus"><i class="fa fa-google-plus"></i></a>
+            <button class="socialbtn googleplus"><span class="icon-google-mas"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span></span></a>
 
             <!-- linkedin -->
-            <button class="socialbtn linkedin" ><i class="fa fa-linkedin"></i></a>
-
-            <!-- pinterest -->
-            <button class="socialbtn pinterest" ><i class="fa fa-pinterest-p"></i></a>
+            <button class="socialbtn linkedin" ><span class="icon-linkedin"><span class="path1"></span><span class="path2"></span></span></a>
 
             </div>
          </div>
@@ -369,10 +369,12 @@ export class HomePage extends LitElement {
     }
 
     close(e) {
+        const node = this.shadowRoot.querySelector('.modal');
         this.resetLogo();
         this.closeModal();
-        this.resetForm();
-
+        node.addEventListener('animationend', () => {
+            this.resetForm();
+        });
     }
 
     resetForm() {
@@ -392,7 +394,8 @@ export class HomePage extends LitElement {
     doLogin(event) {
         if (event) { event.preventDefault(); }
         this.closeModal();
-        location.assign('/dashboard');
+        const custom = new CustomEvent('navigation-to', { 'detail': 'dashboard', composed: true, bubbles: true });
+        this.dispatchEvent(custom);
     }
 
 

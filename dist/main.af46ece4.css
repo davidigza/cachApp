@@ -143,11 +143,11 @@ table {
 }
 
 #outlet>.leaving {
-    animation: 3s fadeOut ease-in-out;
+    animation: 1s fadeOut ease-in-out;
 }
 
 #outlet>.entering {
-    animation: 3s fadeIn linear;
+    animation: 1s fadeIn linear;
 }
 
 @keyframes fadeOut {
@@ -216,6 +216,15 @@ table {
         height: 100vh;
         background-color: #fff;
     }
+}
+
+@font-face {
+    font-family: 'icomoon';
+    src: url('/icomoon.1ca4cec9.eot?j36oue');
+    src: url('/icomoon.1ca4cec9.eot?j36oue#iefix') format('embedded-opentype'), url('/icomoon.6b8bcbf5.ttf?j36oue') format('truetype'), url('/icomoon.9f9cefce.woff?j36oue') format('woff'), url('/icomoon.e8525941.svg?j36oue#icomoon') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-display: block;
 }
 
 /*# sourceMappingURL=/main.af46ece4.css.map */

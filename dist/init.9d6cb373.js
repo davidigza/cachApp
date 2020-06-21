@@ -6939,22 +6939,22 @@ class LogoSpinner extends _litElement.LitElement {
   static get styles() {
     return (0, _litElement.css)`
         :host{
-            --logo-height: 5.750em;
-            --logo-witdh: 5.750em;
+            --logo-height: 7.750em;
+            --logo-witdh: 7.750em;
             --point-color: rgb(10,27,96);
             --primary-line-color: rgb(70,81,135);
             --secondary-line-color: rgb(159,216,233);
             --terciary-line-color: rgb(251,226,84);
-            height: var(--logo-height);
-            width: var(--logo-witdh);
+            height: var(--myCustomHeight, var(--logo-height , 7.750em));
+            width: var(--myCustomwidth, var(--logo-witdh , 7.750em));
         }
         .atom-spinner, .atom-spinner * {
             box-sizing: border-box;
           }
         
           .atom-spinner {
-            height: var(--logo-height);
-            width: var(--logo-witdh);
+            height: var(--myCustomHeight,var(--logo-height , 7.750em));
+            width: var(--myCustomwidth,var(--logo-witdh , 7.750em));
             overflow: hidden;
         
           }
@@ -6970,7 +6970,7 @@ class LogoSpinner extends _litElement.LitElement {
             display: block;
             position: absolute;
             color: var(--point-color);
-            font-size: calc(60px * 0.24);
+            font-size: var(--myCustomPoint, 1.5em);
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
@@ -6982,8 +6982,8 @@ class LogoSpinner extends _litElement.LitElement {
             height: 100%;
             border-radius: 50%;
             animation-duration: 1s;
-            border-left-width: calc(var(--logo-height) / 25);
-            border-top-width: calc(var(--logo-height) / 25);
+            border-left-width: calc(var(--myCustomHeight,var(--logo-height , 7.750em;)) / 12);
+            border-top-width: calc(var(--myCustomHeight,var(--logo-height , 7.750em;)) / 12);
             border-left-color: #000;
             border-left-style: solid;
             border-top-style: solid;
@@ -7064,6 +7064,100 @@ class LogoSpinner extends _litElement.LitElement {
 }
 
 customElements.define('logo-spinner', LogoSpinner);
+},{"lit-element":"../node_modules/lit-element/lit-element.js"}],"helpers/fontsStyles.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _litElement = require("lit-element");
+
+const fontscss = (0, _litElement.css)`
+
+[class^="icon-"], [class*=" icon-"] {
+    /* use !important to prevent issues with browser extensions that change fonts */
+    font-family: 'icomoon' !important;
+    speak: never;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+  
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+.icon-facebook .path1:before {
+    content: "\\e900";
+    color: rgb(59, 89, 152);
+  }
+  .icon-facebook .path2:before {
+    content: "\\e901";
+    margin-left: -1em;
+    color: rgb(255, 255, 255);
+  }
+  .icon-google-mas .path1:before {
+    content: "\\e902";
+    color: rgb(220, 78, 65);
+  }
+  .icon-google-mas .path2:before {
+    content: "\\e903";
+    margin-left: -1em;
+    color: rgb(220, 78, 65);
+  }
+  .icon-google-mas .path3:before {
+    content: "\\e904";
+    margin-left: -1em;
+    color: rgb(220, 78, 65);
+  }
+  .icon-google-mas .path4:before {
+    content: "\\e905";
+    margin-left: -1em;
+    color: rgb(255, 255, 255);
+  }
+  .icon-google-mas .path5:before {
+    content: "\\e906";
+    margin-left: -1em;
+    color: rgb(255, 255, 255);
+  }
+  .icon-twitter .path1:before {
+    content: "\\e907";
+    color: rgb(85, 172, 238);
+  }
+  .icon-twitter .path2:before {
+    content: "\\e908";
+    margin-left: -1em;
+    color: rgb(241, 242, 242);
+  }
+  .icon-linkedin .path1:before {
+    content: "\\e909";
+    color: rgb(0, 122, 185);
+  }
+  .icon-linkedin .path2:before {
+    content: "\\e90a";
+    margin-left: -1em;
+    color: rgb(241, 242, 242);
+  }
+  .icon-calendar:before {
+    content: "\\e953";
+  }
+  .icon-spoon-knife:before {
+    content: "\\e9a3";
+  }
+  .icon-rocket:before {
+    content: "\\e9a5";
+  }
+  .icon-clipboard:before {
+    content: "\\e9b8";
+  }
+  
+  `;
+var _default = fontscss;
+exports.default = _default;
 },{"lit-element":"../node_modules/lit-element/lit-element.js"}],"pages/homePage.js":[function(require,module,exports) {
 "use strict";
 
@@ -7075,6 +7169,10 @@ exports.HomePage = void 0;
 var _litElement = require("lit-element");
 
 require("../elements/logoSpinner.js");
+
+var _fontsStyles = _interopRequireDefault(require("../helpers/fontsStyles.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 class HomePage extends _litElement.LitElement {
   static get properties() {
@@ -7099,7 +7197,7 @@ class HomePage extends _litElement.LitElement {
   }
 
   static get styles() {
-    return [(0, _litElement.css)`
+    return [_fontsStyles.default, (0, _litElement.css)`
         :host{
             min-height: 100%;
             display: grid;
@@ -7355,7 +7453,6 @@ class HomePage extends _litElement.LitElement {
         .pinterest {
             background: #cb2027;
         }
-     
         `];
   }
 
@@ -7365,7 +7462,7 @@ class HomePage extends _litElement.LitElement {
             <div class="content">
                 <logo-spinner status="${this.status}"></logo-spinner>
                 <div>
-                    <h1>actíva T</h1>
+                    <h1>actíva-T</h1>
                     <span>libera tu energia</span>
                 </div>
             </div> 
@@ -7395,25 +7492,24 @@ class HomePage extends _litElement.LitElement {
                 <button id="login-signing" class="button " type="submit" value="Submit" tabindex="1">Login</button>
                 <button id="login-signing" class="button " tabindex="1" @click="${this.close}">close</button>
             </div>
-          
+            <a href="/dashboard"></a>
          </form>
+
+
 
          <div class="other-logins">
          <div id="share">
             <!-- facebook -->
-            <button  class="socialbtn facebook" ><i class="fa fa-facebook"></i></a>
+            <button  class="socialbtn facebook" ><span class="icon-facebook"><span class="path1"></span><span class="path2"></span></span></a>
 
             <!-- twitter -->
-            <button class="socialbtn twitter"><i class="fa fa-twitter"></i></a>
+            <button class="socialbtn twitter"><span class="icon-twitter"><span class="path1"></span><span class="path2"></span></span></a>
 
             <!-- google plus -->
-            <button class="socialbtn googleplus"><i class="fa fa-google-plus"></i></a>
+            <button class="socialbtn googleplus"><span class="icon-google-mas"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span></span></a>
 
             <!-- linkedin -->
-            <button class="socialbtn linkedin" ><i class="fa fa-linkedin"></i></a>
-
-            <!-- pinterest -->
-            <button class="socialbtn pinterest" ><i class="fa fa-pinterest-p"></i></a>
+            <button class="socialbtn linkedin" ><span class="icon-linkedin"><span class="path1"></span><span class="path2"></span></span></a>
 
             </div>
          </div>
@@ -7438,9 +7534,12 @@ class HomePage extends _litElement.LitElement {
   }
 
   close(e) {
+    const node = this.shadowRoot.querySelector('.modal');
     this.resetLogo();
     this.closeModal();
-    this.resetForm();
+    node.addEventListener('animationend', () => {
+      this.resetForm();
+    });
   }
 
   resetForm() {
@@ -7462,13 +7561,18 @@ class HomePage extends _litElement.LitElement {
     }
 
     this.closeModal();
-    location.assign('/dashboard');
+    const custom = new CustomEvent('navigation-to', {
+      'detail': 'dashboard',
+      composed: true,
+      bubbles: true
+    });
+    this.dispatchEvent(custom);
   }
 
 }
 
 exports.HomePage = HomePage;
-},{"lit-element":"../node_modules/lit-element/lit-element.js","../elements/logoSpinner.js":"elements/logoSpinner.js"}],"pages/home-page.js":[function(require,module,exports) {
+},{"lit-element":"../node_modules/lit-element/lit-element.js","../elements/logoSpinner.js":"elements/logoSpinner.js","../helpers/fontsStyles.js":"helpers/fontsStyles.js"}],"pages/home-page.js":[function(require,module,exports) {
 "use strict";
 
 var _homePage = require("./homePage.js");
@@ -7484,6 +7588,10 @@ exports.DashboardPage = void 0;
 
 var _litElement = require("lit-element");
 
+var _fontsStyles = _interopRequireDefault(require("../helpers/fontsStyles.js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 class DashboardPage extends _litElement.LitElement {
   static get properties() {
     return {};
@@ -7494,28 +7602,125 @@ class DashboardPage extends _litElement.LitElement {
   }
 
   static get styles() {
-    return [(0, _litElement.css)`
+    return [_fontsStyles.default, (0, _litElement.css)`
         :host {
+            min-height: 100%;
+            display: grid;
+            grid-template-rows: auto 1fr;
+            grid-template-columns: 100%;
+            position: relative;
+            background: #fff;
+            padding: 2em;
+            box-sizing: border-box;
+            --myCustomHeight: 3em;
+            --myCustomwidth: 3em;
+            --myCustomPoint: 1em;
+        }
+
+        header{
+            display: flex;
+            align-items: center;
+            margin-top: 2em;
+            justify-content: space-between;
+        }
+
+        header span {
+            font-family: Ultra, serif;
+            text-transform: uppercase;
+            color: rgb(10, 27, 96);
+            font-size: 2.2em;
+        }
+
+        main {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            padding: 0 1em 1em;
+        }
+
+        .btn{
+            display: inline-block;
+            padding: 6px 12px 0 0;
+            margin-bottom: 0;
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 1.42857143;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: middle;
+            -ms-touch-action: manipulation;
+            touch-action: manipulation;
+            cursor: pointer;
+            user-select: none;
+            background-image: none;
+            border: 1px solid transparent;
+            border-radius: 4px;
+            text-align: center;
+            align-content: center;
+            height: 3em;
+            line-height: 38px;
+        }
+
+        .btn-label {
+            position: relative;
+            float:left;
+            display: inline-block;
+            background: rgba(0,0,0,0.15);
+            border-radius: 3px 0 0 3px;
+            line-height: 38px;
             height: 100%;
-            width: 100%;
-            display: block;
-            background: red;
-            }
+            width: 2.5em;
+        }
+
+        .btn-labeled {color: #fff;
+           
+            padding-top: 0;
+            padding-bottom: 0;}
+
+        .btn-dieta{
+            background-color: #5cb85c;
+            border-color: #4cae4c;
+        }
+
+        .btn-tabla{
+            background-color: #337ab7;
+            border-color: #2e6da4;
+        }
+
+        .btn-obj{
+            background-color: #f0ad4e;
+            border-color: #eea236;
+        }
+
+        .btn-test{
+            background-color: #5bc0de;
+            border-color: #46b8da;
+        }
+        
         `];
   }
 
   render() {
     return (0, _litElement.html)`
+        <header>
+            <logo-spinner></logo-spinner>
+            <span> actíva-t </span>  
+        </header>
         <main>
+            <button type="button" class="btn btn-labeled btn-dieta">
+            <span class="btn-label icon-spoon-knife"></span>Alimentación</button>
+            <button type="button" class="btn btn-labeled btn-tabla"><span class="btn-label icon-calendar"></span>Tabla</button>
+            <button type="button" class="btn btn-labeled btn-obj"><span class="btn-label icon-rocket"></span>Objetivos</button>
+            <button type="button" class="btn btn-labeled btn-test"><span class="btn-label icon-clipboard"></span>Tests</button>
         </main>
-        <footer></footer>
+        
         `;
   }
 
 }
 
 exports.DashboardPage = DashboardPage;
-},{"lit-element":"../node_modules/lit-element/lit-element.js"}],"pages/dashboard-page.js":[function(require,module,exports) {
+},{"lit-element":"../node_modules/lit-element/lit-element.js","../helpers/fontsStyles.js":"helpers/fontsStyles.js"}],"pages/dashboard-page.js":[function(require,module,exports) {
 "use strict";
 
 var _dashboardPage = require("./dashboardPage.js");
@@ -7536,16 +7741,20 @@ router.setRoutes([{
   path: '/',
   animate: true,
   children: [{
-    path: '/',
+    path: '',
     component: 'home-page'
   }, {
     path: '/dashboard',
     component: 'dashboard-page'
-  }, {
-    path: '(.*)',
-    component: 'home-page'
   }]
 }]);
+outlet.addEventListener('navigation-to', ({
+  detail
+}) => {
+  debugger;
+
+  _router.Router.go(`/${detail}`);
+});
 },{"@vaadin/router":"../node_modules/@vaadin/router/dist/vaadin-router.js","./pages/home-page.js":"pages/home-page.js","./pages/dashboard-page.js":"pages/dashboard-page.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -7574,7 +7783,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57818" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59511" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

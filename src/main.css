@@ -143,11 +143,11 @@ table {
 }
 
 #outlet>.leaving {
-    animation: 3s fadeOut ease-in-out;
+    animation: 1s fadeOut ease-in-out;
 }
 
 #outlet>.entering {
-    animation: 3s fadeIn linear;
+    animation: 1s fadeIn linear;
 }
 
 @keyframes fadeOut {
@@ -216,4 +216,13 @@ table {
         height: 100vh;
         background-color: #fff;
     }
+}
+
+@font-face {
+    font-family: 'icomoon';
+    src: url('fonts/icomoon.eot?j36oue');
+    src: url('fonts/icomoon.eot?j36oue#iefix') format('embedded-opentype'), url('fonts/icomoon.ttf?j36oue') format('truetype'), url('fonts/icomoon.woff?j36oue') format('woff'), url('fonts/icomoon.svg?j36oue#icomoon') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-display: block;
 }

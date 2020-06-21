@@ -10,9 +10,13 @@ router.setRoutes(
         path: '/',
         animate: true,
         children: [
-            { path: '/', component: 'home-page' },
+            { path: '', component: 'home-page' },
             { path: '/dashboard', component: 'dashboard-page' },
-            { path: '(.*)', component: 'home-page' },
         ]
     }]
 );
+
+outlet.addEventListener('navigation-to', ({ detail }) => {
+    debugger;
+    Router.go(`/${detail}`)
+})

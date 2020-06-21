@@ -19,22 +19,22 @@ class LogoSpinner extends LitElement {
     static get styles() {
         return css `
         :host{
-            --logo-height: 5.750em;
-            --logo-witdh: 5.750em;
+            --logo-height: 7.750em;
+            --logo-witdh: 7.750em;
             --point-color: rgb(10,27,96);
             --primary-line-color: rgb(70,81,135);
             --secondary-line-color: rgb(159,216,233);
             --terciary-line-color: rgb(251,226,84);
-            height: var(--logo-height);
-            width: var(--logo-witdh);
+            height: var(--myCustomHeight, var(--logo-height , 7.750em));
+            width: var(--myCustomwidth, var(--logo-witdh , 7.750em));
         }
         .atom-spinner, .atom-spinner * {
             box-sizing: border-box;
           }
         
           .atom-spinner {
-            height: var(--logo-height);
-            width: var(--logo-witdh);
+            height: var(--myCustomHeight,var(--logo-height , 7.750em));
+            width: var(--myCustomwidth,var(--logo-witdh , 7.750em));
             overflow: hidden;
         
           }
@@ -50,7 +50,7 @@ class LogoSpinner extends LitElement {
             display: block;
             position: absolute;
             color: var(--point-color);
-            font-size: calc(60px * 0.24);
+            font-size: var(--myCustomPoint, 1.5em);
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
@@ -62,8 +62,8 @@ class LogoSpinner extends LitElement {
             height: 100%;
             border-radius: 50%;
             animation-duration: 1s;
-            border-left-width: calc(var(--logo-height) / 25);
-            border-top-width: calc(var(--logo-height) / 25);
+            border-left-width: calc(var(--myCustomHeight,var(--logo-height , 7.750em;)) / 12);
+            border-top-width: calc(var(--myCustomHeight,var(--logo-height , 7.750em;)) / 12);
             border-left-color: #000;
             border-left-style: solid;
             border-top-style: solid;
