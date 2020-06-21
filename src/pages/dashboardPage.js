@@ -7,6 +7,7 @@ import {
 import fontscss from '../helpers/fontsStyles.js'
 
 
+
 export class DashboardPage extends LitElement {
     static get properties() {
         return {}
@@ -124,14 +125,20 @@ export class DashboardPage extends LitElement {
             <span> actíva-t </span>  
         </header>
         <main>
-            <button type="button" class="btn btn-labeled btn-dieta">
+            <button type="button" class="btn btn-labeled btn-dieta" data-url="dieta" @click="${this.handleClick}">
             <span class="btn-label icon-spoon-knife"></span>Alimentación</button>
-            <button type="button" class="btn btn-labeled btn-tabla"><span class="btn-label icon-calendar"></span>Tabla</button>
-            <button type="button" class="btn btn-labeled btn-obj"><span class="btn-label icon-rocket"></span>Objetivos</button>
-            <button type="button" class="btn btn-labeled btn-test"><span class="btn-label icon-clipboard"></span>Tests</button>
+            <button type="button" class="btn btn-labeled btn-tabla" data-url="tabla" @click="${this.handleClick}"><span class="btn-label icon-calendar"></span>Tabla</button>
+            <button type="button" class="btn btn-labeled btn-obj" data-url="obj" @click="${this.handleClick}"><span class="btn-label icon-rocket"></span>Objetivos</button>
+            <button type="button" class="btn btn-labeled btn-test" data-url="test" @click="${this.handleClick}"><span class="btn-label icon-clipboard"></span>Tests</button>
         </main>
         
         `
+    }
+
+    handleClick(e) {
+        const data = e.target.dataset.url;
+        const custom = new CustomEvent('navigation-to', { 'detail': data, composed: true, bubbles: true });
+        this.dispatchEvent(custom);
     }
 
 

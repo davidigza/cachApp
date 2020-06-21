@@ -5,16 +5,43 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>cachApp</title>
-    <link rel="stylesheet" href="/main.af46ece4.css">
+    <link rel="stylesheet" href="/main.ab951ecb.css">
     <link href="https://fonts.googleapis.com/css2?family=Raleway:ital@1&family=Shadows+Into+Light&family=Ultra&display=swap" rel="stylesheet">
-<script src="/main.af46ece4.js"></script></head>
+    <link rel="manifest" href="/manifest.webmanifest">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="white">
+    <meta name="apple-mobile-web-app-title" content="ActivaT PWA">
+    <link rel="apple-touch-icon" href="/icon-192x192.be881c23.png">
+    <meta name="theme-color" content="#FFF">
+    <link rel="icon" type="image/png" href="/favicon-16x16.10e5cb6e.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="/favicon-32x32.f75e54a6.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="/icon-192x192.be881c23.png" sizes="192x192">
+    <link rel="apple-touch-icon" href="/apple-touch-icon-180x180.6ae5be0d.png" sizes="180x180">
+    <meta name="msapplication-config" content="/browserconfig.d9dfa1a1.xml">
+</head>
 
 <body>
-
-
-
     <div id="outlet"></div>
-    <script src="/init.9d6cb373.js"></script>
+    <script src="/init.d60ddbb2.js"></script>
 </body>
+<script>
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('/sw.js').then(registration => {
+                console.log('SW registered: ', registration);
+            }).catch(registrationError => {
+                console.log('SW registration failed: ', registrationError);
+            });
+        });
+    }
+</script>
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="/__/firebase/7.15.3/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+
+<!-- Initialize Firebase -->
+<script src="/__/firebase/init.js"></script>
 
 </html>

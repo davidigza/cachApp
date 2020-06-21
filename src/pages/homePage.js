@@ -101,11 +101,11 @@ export class HomePage extends LitElement {
             font-size: inherit;
             font-family: inherit;
         }
-        button.learn-more {
+        button.singIn {
             width: 12rem;
             height: auto;
         }
-        button.learn-more .circle {
+        button.singIn .circle {
             -webkit-transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
             transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
             position: relative;
@@ -116,7 +116,7 @@ export class HomePage extends LitElement {
             background: rgb(10, 27, 96);
             border-radius: 1.625rem;
         }
-        button.learn-more .circle .icon {
+        button.singIn .circle .icon {
             -webkit-transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
             transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
             position: absolute;
@@ -125,7 +125,7 @@ export class HomePage extends LitElement {
             margin: auto;
             background: #fff;
         }
-        button.learn-more .circle .icon.arrow {
+        button.singIn .circle .icon.arrow {
             -webkit-transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
             transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
             left: 0.625rem;
@@ -133,7 +133,7 @@ export class HomePage extends LitElement {
             height: 0.125rem;
             background: none;
         }
-        button.learn-more .circle .icon.arrow::before {
+        button.singIn .circle .icon.arrow::before {
             position: absolute;
             content: '';
             top: -0.25rem;
@@ -145,7 +145,7 @@ export class HomePage extends LitElement {
             -webkit-transform: rotate(45deg);
                     transform: rotate(45deg);
         }
-        button.learn-more .button-text {
+        button.singIn .button-text {
             -webkit-transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
             transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
             position: absolute;
@@ -303,7 +303,7 @@ export class HomePage extends LitElement {
             </div> 
         </main>
          <footer>
-         <button class="learn-more" @click="${this.handleClick}">
+         <button class="singIn" @click="${this.handleClick}">
             <span class="circle" aria-hidden="true">
             <span class="icon arrow"></span>
             </span>
@@ -369,12 +369,13 @@ export class HomePage extends LitElement {
     }
 
     close(e) {
-        const node = this.shadowRoot.querySelector('.modal');
         this.resetLogo();
         this.closeModal();
-        node.addEventListener('animationend', () => {
+        setTimeout(() => {
+            debugger;
             this.resetForm();
-        });
+        }, 500);
+
     }
 
     resetForm() {
@@ -394,8 +395,11 @@ export class HomePage extends LitElement {
     doLogin(event) {
         if (event) { event.preventDefault(); }
         this.closeModal();
-        const custom = new CustomEvent('navigation-to', { 'detail': 'dashboard', composed: true, bubbles: true });
-        this.dispatchEvent(custom);
+        setTimeout(() => {
+            const custom = new CustomEvent('navigation-to', { 'detail': 'dashboard', composed: true, bubbles: true });
+            this.dispatchEvent(custom);
+        }, 1500);
+
     }
 
 
